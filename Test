@@ -1,0 +1,28 @@
+[クライアント]  
+│  
+├─ [Akamai CDN] (DDoS対策/キャッシュ)  
+│  │  
+│  ├─ [AWS WAFv2] (SQLインジェクション等の防御)  
+│     │  
+│     └─ [K8s Ingress (NGINX/Istio)] (ルーティング)  
+│        │  
+│        ├─ [K8s Namespace: Frontend]  
+│        │  ├─ [Pod: Webアプリ]  
+│        │  └─ [Pod: Sysdig Agent (eBPFモニタリング)]  
+│        │  
+│        ├─ [K8s Namespace: Backend]  
+│        │  ├─ [Pod: APIサーバー]  
+│        │  └─ [Pod: Sysdig Agent]  
+│        │  
+│        └─ [K8s Namespace: Database]  
+│           ├─ [Pod: Redis (キャッシュ)]  
+│           └─ [Pod: Postgres (DB)]  
+│  
+├─ [監視・セキュリティ基盤]  
+│  ├─ [Sysdig Secure] (ランタイムセキュリティ/Falcoルール)  
+│  ├─ [Prometheus + Grafana] (メトリクス可視化)  
+│  └─ [AWS S3] (フォレンジックログ保管)  
+│  
+└─ [外部連携]  
+   ├─ [Deep Security Manager 移行対象外]  
+   └─ [VPC Traffic Mirroring → Sysdig Capture に置き換え]  
